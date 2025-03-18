@@ -1,19 +1,12 @@
-name = "meta-site-vue"
-compatibility_date = "2025-03-18"
-main = "./functions/contact.ts"
+name = "meta-site-vue"  # Worker name
+type = "javascript"  # Worker type (JS-based worker)
+compatibility_date = "2025-03-18"  # Adjust to the current date
 
-# HTTP routes - note these are in array format now
-[[routes]]
-pattern = "meta-site-vue.anandncs.workers.dev/*"
-script = "meta-site-vue"
+# Entry point for the worker script
+main = "./functions/contact.ts"  # The TypeScript file path
 
-# Simplified build settings
+# Build settings (optional if you need specific build steps)
 [build]
-command = ""
-
-# Proper CORS settings
-[cors]
-origin = ["*"]
-methods = ["GET", "POST", "OPTIONS"]
-headers = ["Content-Type"]
-max_age = 86400
+command = "npm install && npm run build"  # Add build steps if necessary
+upload.format = "service-worker"  # Ensure that it's a service worker
+upload.dir = "./functions"  # Specify the directory with the worker script

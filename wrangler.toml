@@ -1,12 +1,12 @@
-name = "contact-us-handler"       # Worker name
-type = "javascript"              # Worker type (JS-based worker)
-compatibility_date = "2025-03-18" # Adjust to the current date
+name = "meta-site-vue.anandncs.workers.dev"  # Worker name
+type = "javascript"  # Worker type (JS-based worker)
+compatibility_date = "2025-03-18"  # Adjust to the current date
 
 # Entry point for the worker script
-main = "./functions/contact.ts"     # Replace with your script path
+main = "./functions/contact.ts"  # The TypeScript file path
 
-# Define the GitHub build settings
+# Build settings (optional if you need specific build steps)
 [build]
-command = "npm install && npm run build"   # Add build steps if necessary
-upload.format = "service-worker"
-upload.dir = "./functions"         # Specify the directory with the worker script
+command = "npm install && npm run build"  # Add build steps if necessary
+upload.format = "service-worker"  # Ensure that it's a service worker
+upload.dir = "./functions"  # Specify the directory with the worker script

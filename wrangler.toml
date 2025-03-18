@@ -1,19 +1,3 @@
 name = "meta-site-vue"
-compatibility_date = "2025-03-18"
+compatibility_date = "2023-03-18"
 main = "./functions/contact.ts"
-
-# HTTP routes - note these are in array format now
-[[routes]]
-pattern = "meta-site-vue.anandncs.workers.dev/*"
-script = "meta-site-vue"
-
-# Simplified build settings
-[build]
-command = ""
-
-# Proper CORS settings
-[cors]
-origin = ["*"]
-methods = ["GET", "POST", "OPTIONS"]
-headers = ["Content-Type"]
-max_age = 86400

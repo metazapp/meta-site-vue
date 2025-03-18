@@ -46,7 +46,7 @@ export default {
         // Prepare email data for MailChannels
         const emailData = {
           from: {
-            email: "noreply@metazapp.com",
+            email: "no-reply@mailchannels.net",
             name: "Metazapp Contact Form",
           },
           to: [

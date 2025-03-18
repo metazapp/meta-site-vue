@@ -1,4 +1,4 @@
-name = "meta-site-vue.workers.dev"       # Worker name
+name = "contact-us-handler"       # Worker name
 type = "javascript"              # Worker type (JS-based worker)
 compatibility_date = "2025-03-18" # Adjust to the current date
 

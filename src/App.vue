@@ -73,8 +73,8 @@ const loading = ref(false)
 const submitStatus = ref<'success' | 'error' | null>(null)
 
 const handleSubmit = async () => {
-  loading.value = true
-  submitStatus.value = null
+  loading.value = true;
+  submitStatus.value = null;
   
   try {
     const response = await fetch('https://meta-site-vue.anandncs.workers.dev/contact', {
@@ -88,21 +88,23 @@ const handleSubmit = async () => {
     const data = await response.json();
     
     if (data.success) {
-      submitStatus.value = 'success'
+      submitStatus.value = 'success';
+      // Clear the form after successful submission
       form.value = {
         name: '',
         email: '',
         subject: '',
         message: ''
-      }
+      };
     } else {
-      throw new Error('Failed to send message');
+      console.error('Error response:', data);
+      throw new Error(data.error || 'Failed to send message');
     }
   } catch (error) {
-    console.error('Failed to send email:', error)
-    submitStatus.value = 'error'
+    console.error('Failed to send email:', error);
+    submitStatus.value = 'error';
   } finally {
-    loading.value = false
+    loading.value = false;
   }
 }
 </script>

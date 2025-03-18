@@ -77,7 +77,7 @@ const handleSubmit = async () => {
   submitStatus.value = null
   
   try {
-    const response = await fetch('https://meta-site-vue-anandncs-workers-dev.anandncs.workers.dev/contact', {
+    const response = await fetch('https://meta-site-vue.anandncs.workers.dev/contact', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

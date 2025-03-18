@@ -44,22 +44,23 @@ export default {
         }
 
         // Prepare email data for MailChannels
+        // Using the generic MailChannels email to avoid authentication issues
         const emailData = {
           from: {
             email: "no-reply@mailchannels.net",
-            name: "Metazapp Contact Form",
+            name: "Metazapp Contact Form"
           },
           to: [
             {
               email: "hello@metazapp.com",
-              name: "Metazapp Team",
-            },
+              name: "Metazapp Team"
+            }
           ],
           subject: `Contact Form: ${subject}`,
           content: [
             {
               type: "text/plain",
-              value: `Name: ${name}\nEmail: ${email}\nSubject: ${subject}\n\nMessage: ${message}`,
+              value: `Name: ${name}\nEmail: ${email}\nSubject: ${subject}\n\nMessage: ${message}`
             },
             {
               type: "text/html",
@@ -70,61 +71,65 @@ export default {
                 <p><strong>Subject:</strong> ${subject}</p>
                 <h3>Message:</h3>
                 <p>${message.replace(/\n/g, '<br>')}</p>
-              `,
-            },
-          ],
+              `
+            }
+          ]
         };
 
         // Send email using MailChannels API
         const mailResponse = await fetch("https://api.mailchannels.net/tx/v1/send", {
           method: "POST",
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "application/json"
           },
-          body: JSON.stringify(emailData),
+          body: JSON.stringify(emailData)
         });
 
+        // Get response text for detailed error information
+        const responseText = await mailResponse.text();
+        
         if (mailResponse.status >= 200 && mailResponse.status < 300) {
           return new Response(
             JSON.stringify({
               success: true,
-              message: "Email sent successfully",
+              message: "Email sent successfully"
             }),
             {
               headers: {
                 "Content-Type": "application/json",
-                "Access-Control-Allow-Origin": "*",
-              },
+                "Access-Control-Allow-Origin": "*"
+              }
             }
           );
         } else {
-          const mailResponseText = await mailResponse.text();
+          console.error(`Mail API error: ${mailResponse.status} - ${responseText}`);
           return new Response(
             JSON.stringify({
               success: false,
-              error: `Failed to send email: ${mailResponseText}`,
+              error: `Failed to send email: ${responseText}`
             }),
             {
               status: 500,
               headers: {
                 "Content-Type": "application/json",
-                "Access-Control-Allow-Origin": "*",
-              },
+                "Access-Control-Allow-Origin": "*"
+              }
             }
           );
         }
       } catch (error) {
+        console.error('Worker error:', error);
         return new Response(
           JSON.stringify({
             success: false,
-            error: error.message || "An unexpected error occurred",
+            error: error.message || "An unexpected error occurred"
           }),
           {
             status: 500,
             headers: {
               "Content-Type": "application/json",
-              "Access-Control-Allow-Origin": "*",
-            },
+              "Access-Control-Allow-Origin": "*"
+            }
           }
         );
       }
@@ -135,8 +140,8 @@ export default {
       status: 405,
       headers: {
         "Allow": "POST, OPTIONS",
-        "Access-Control-Allow-Origin": "*",
-      },
+        "Access-Control-Allow-Origin": "*"
+      }
     });
-  },
+  }
 };

@@ -25,6 +25,8 @@ export default {
         // Parse the request body
         const payload: EmailPayload = await request.json();
         const { name, email, subject, message } = payload;
+        
+        console.log("Received form submission:", { name, email, subject });
 
         // Validate required fields
         if (!name || !email || !subject || !message) {
@@ -44,7 +46,6 @@ export default {
         }
 
         // Prepare email data for MailChannels
-        // Using the generic MailChannels email to avoid authentication issues
         const emailData = {
           from: {
             email: "no-reply@mailchannels.net",
@@ -56,6 +57,10 @@ export default {
               name: "Metazapp Team"
             }
           ],
+          reply_to: {
+            email: email,
+            name: name
+          },
           subject: `Contact Form: ${subject}`,
           content: [
             {
@@ -76,6 +81,8 @@ export default {
           ]
         };
 
+        console.log("Sending email to MailChannels API");
+
         // Send email using MailChannels API
         const mailResponse = await fetch("https://api.mailchannels.net/tx/v1/send", {
           method: "POST",
@@ -89,6 +96,7 @@ export default {
         const responseText = await mailResponse.text();
         
         if (mailResponse.status >= 200 && mailResponse.status < 300) {
+          console.log("Email sent successfully");
           return new Response(
             JSON.stringify({
               success: true,

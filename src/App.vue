@@ -75,41 +75,47 @@ const submitStatus = ref<'success' | 'error' | null>(null)
 const handleSubmit = async () => {
   loading.value = true;
   submitStatus.value = null;
-  
+
   try {
     console.log("Submitting form:", form.value);
-    
-    const response = await fetch('https://metazapp.com/api/contact', {
-      method: 'POST',
+
+    const response = await fetch("https://mailworker.anandncs.workers.dev", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(form.value),
+      body: JSON.stringify({
+        name: form.value.name,
+        email: form.value.email,
+        message: form.value.message,
+      }),
     });
 
-    const data = await response.json();
-    console.log("Response received:", data);
-    
-    if (data.success) {
-      submitStatus.value = 'success';
+    const responseText = await response.text(); // Get raw response text
+    console.log("Response received:", responseText);
+
+    if (response.ok) {
+      submitStatus.value = "success";
+
       // Clear the form after successful submission
       form.value = {
-        name: '',
-        email: '',
-        subject: '',
-        message: ''
+        name: "",
+        email: "",
+        subject: "",
+        message: "",
       };
     } else {
-      console.error('Error response:', data);
-      throw new Error(data.error || 'Failed to send message');
+      console.error("Error response:", responseText);
+      throw new Error("Failed to send message. Please try again later.");
     }
   } catch (error) {
-    console.error('Failed to send email:', error);
-    submitStatus.value = 'error';
+    console.error("Failed to send email:", error);
+    submitStatus.value = "error";
   } finally {
     loading.value = false;
   }
-}
+};
+
 </script>
 
 <template>

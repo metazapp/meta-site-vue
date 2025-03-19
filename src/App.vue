@@ -77,7 +77,9 @@ const handleSubmit = async () => {
   submitStatus.value = null;
   
   try {
-    const response = await fetch('https://meta-site-vue.anandncs.workers.dev/contact', {
+    console.log("Submitting form:", form.value);
+    
+    const response = await fetch('https://metazapp.com/api/contact', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -86,6 +88,7 @@ const handleSubmit = async () => {
     });
 
     const data = await response.json();
+    console.log("Response received:", data);
     
     if (data.success) {
       submitStatus.value = 'success';

@@ -1,14 +1,16 @@
 name = "meta-site-vue"  # Worker name
-type = "javascript"  # Worker type (JS-based worker)
+type = "javascript"     # Worker type (JS-based worker)
 compatibility_date = "2025-03-18"  # Adjust to the current date
-wrangler publish --name meta-site-vue
-# Then add a route in Cloudflare dashboard or using:
-wrangler route add https://metazapp.com/api/contact https://meta-site-vue.anandncs.workers.dev/contact
 
 # Entry point for the worker script
 main = "./functions/contact.ts"  # The TypeScript file path
 
-# Build settings (optional if you need specific build steps)
+# Routes
+routes = [
+  { pattern = "*metazapp.com/api/contact*", zone_name = "metazapp.com" }
+]
+
+# Build settings
 [build]
 command = "npm install && npm run build"  # Add build steps if necessary
 upload.format = "service-worker"  # Ensure that it's a service worker
